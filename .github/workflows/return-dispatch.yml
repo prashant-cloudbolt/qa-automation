@@ -1,0 +1,15 @@
+name: Release Candidate Build
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  content-library:
+    name: Kick off content-library workflow
+    uses: ./.github/workflows/content-library-release.yml
+    with:
+      environment: Production
+      publish: true
+    secrets: inherit
