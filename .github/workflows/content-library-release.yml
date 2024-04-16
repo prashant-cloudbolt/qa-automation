@@ -42,6 +42,7 @@ jobs:
         id: return_dispatch
         with:
           token: ${{ secrets.GH_TOKEN }}
+          ref: main
           repo: workflow-target
           owner: prashant-cloudbolt
           workflow: generate-artifacts.yml
