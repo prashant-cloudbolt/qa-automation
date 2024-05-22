@@ -51,10 +51,10 @@ jobs:
       - name: Watch generate-artifacts run
         continue-on-error: true
         env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           RUN_ID=${{ steps.return_dispatch.outputs.run_id }}
-          gh run watch $RUN_ID --repo rashant-cloudbolt/workflow-target
+          gh run watch $RUN_ID --repo prashant-cloudbolt/workflow-target
 
       # - name: Use the output run ID
       #   run: echo ${{steps.return_dispatch.outputs.run_id}}
