@@ -53,7 +53,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          RUN_ID=$(${{ steps.return_dispatch.outputs.run_id }})
+          RUN_ID=${{ steps.return_dispatch.outputs.run_id }}
           gh run watch $RUN_ID --repo cloudboltsoftware/content-library
 
       # - name: Use the output run ID
