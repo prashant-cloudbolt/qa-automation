@@ -54,7 +54,7 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           RUN_ID=${{ steps.return_dispatch.outputs.run_id }}
-          gh run watch $RUN_ID --repo cloudboltsoftware/content-library
+          gh run watch $RUN_ID --repo rashant-cloudbolt/workflow-target
 
       # - name: Use the output run ID
       #   run: echo ${{steps.return_dispatch.outputs.run_id}}
