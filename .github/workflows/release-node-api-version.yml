@@ -23,17 +23,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set ref dynamically
-        run: echo "REF=$(git rev-parse HEAD)" >> $GITHUB_ENV
+        id: set-ref
+        run: echo "::set-output name=ref::$(git rev-parse HEAD)"
 
       - name: echo branch name
         run: |
-          echo ${{ env.REF }}
+          echo ${{ steps.set-ref.outputs.ref }}
 
       - name: run node-api release version workflow
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          gh workflow run release-version.yml --repo prashant-cloudbolt/workflow-target --ref ${{ env.REF }}
+          gh workflow run release-version.yml --repo prashant-cloudbolt/workflow-target --ref ${{ steps.set-ref.outputs.ref }}
 
 
 
