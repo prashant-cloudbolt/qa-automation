@@ -1,4 +1,4 @@
-name: Release Candidate Build
+name: release-api-version
 on:
   push:
     branches:
@@ -13,12 +13,3 @@ jobs:
         run: |
           branch_name="${GITHUB_REF#refs/heads/}"
           echo $branch_name
-
-
-  # content-library:
-  #   name: Kick off content-library workflow
-  #   uses: ./.github/workflows/content-library-release.yml
-  #   with:
-  #     environment: Production
-  #     publish: true
-  #   secrets: inherit
