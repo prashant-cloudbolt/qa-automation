@@ -24,15 +24,15 @@ jobs:
       - name: Run a script
         run: echo "Triggered by the completion of the first workflow on branch ${{ github.event.workflow_run.head_branch }}"
 
-      - name: Set branch name dynamically
-        id: set-branch
-        run: echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+      # - name: Set branch name dynamically
+      #   id: set-branch
+      #   run: echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
 
-      - name: Debug branch value
-        run: echo "The branch is ${{ env.BRANCH }}"
+      # - name: Debug branch value
+      #   run: echo "The branch is ${{ env.BRANCH }}"
 
       - name: run node-api release version workflow
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          gh workflow run release-version.yml --repo prashant-cloudbolt/workflow-target --ref $BRANCH
+          gh workflow run release-version.yml --repo prashant-cloudbolt/workflow-target --ref ${{ github.event.workflow_run.head_branch }}
