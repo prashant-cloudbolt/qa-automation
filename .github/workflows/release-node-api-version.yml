@@ -2,6 +2,10 @@ name: release-node-api-version
 on:
   workflow_run:
     workflows: ["release-api-version"]
+    branches:
+      - multi_tenant_stage
+      - multi_tenant_prod
+      - multi_tenant_dev
     types:
       - completed
         
