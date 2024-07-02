@@ -2,14 +2,23 @@ name: Release Candidate Build
 on:
   push:
     branches:
-      - develop
-      - main
+      - multi_tenant_dev
+      - multi_tenant_stage
 
 jobs:
-  content-library:
-    name: Kick off content-library workflow
-    uses: ./.github/workflows/content-library-release.yml
-    with:
-      environment: Production
-      publish: true
-    secrets: inherit
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Branch name
+        run: |
+          branch_name="${GITHUB_REF#refs/heads/}"
+          echo $branch_name
+
+
+  # content-library:
+  #   name: Kick off content-library workflow
+  #   uses: ./.github/workflows/content-library-release.yml
+  #   with:
+  #     environment: Production
+  #     publish: true
+  #   secrets: inherit
