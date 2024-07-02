@@ -1,21 +1,20 @@
 name: release-node-api-version
-    
 on:
-    workflow_run:
-      workflows: ["release-api-version"]
-      branches:
-        - multi_tenant_stage
-        - multi_tenant_prod
-        - multi_tenant_dev
-      types:
-        - completed
+  workflow_run:
+    workflows: ["release-api-version"]
+    branches:
+      - multi_tenant_stage
+      - multi_tenant_prod
+      - multi_tenant_dev
+    types:
+      - completed
         
 permissions:
-    id-token: write 
-    contents: read
-    pull-requests: write
-    security-events: write
-    actions: read
+  id-token: write 
+  contents: read
+  pull-requests: write
+  security-events: write
+  actions: read
 
 jobs:
   trigger-release-node-api-version-workflow:
@@ -23,12 +22,15 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-        - name: run node-api release version workflow
-          env:
-            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          run: |
-              branch_name="${GITHUB_REF#refs/heads/}"
-              gh workflow run release-version.yml --repo prashant-cloudbolt/workflow-target --ref $branch_name
+      - name: Set ref dynamically
+        run: echo "REF=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
+      - name: run node-api release version workflow
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          echo ${{ env.REF }}
+          gh workflow run release-version.yml --repo prashant-cloudbolt/workflow-target --ref ${{ env.REF }}
 
 
 
