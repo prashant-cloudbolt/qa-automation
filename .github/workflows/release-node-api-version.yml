@@ -18,18 +18,8 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Run a script
+      - name: Debug branch value
         run: echo "Triggered by the completion of the first workflow on branch ${{ github.event.workflow_run.head_branch }}"
-
-      # - name: Set branch name dynamically
-      #   id: set-branch
-      #   run: echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
-
-      # - name: Debug branch value
-      #   run: echo "The branch is ${{ env.BRANCH }}"
 
       - name: run node-api release version workflow
         env:
