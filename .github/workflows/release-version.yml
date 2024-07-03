@@ -10,6 +10,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo Branch name
+        id: get_branch
         run: |
+          # Extract the branch name from the GITHUB_REF environment variable
           branch_name="${GITHUB_REF#refs/heads/}"
-          echo $branch_name
+
+          # Set the branch name as an environment variable
+          echo "branch_name=$branch_name" >> $GITHUB_ENV
+
+          # Set the branch name as an output variable
+          echo "::set-output name=branch_name::$branch_name"
+
+      - name: run reporting release version workflow
+        uses: codex-/return-dispatch@v1
+        id: return_dispatch
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          ref: ${{ steps.get_branch.outputs.branch_name }}
+          repo: workflow-target
+          owner: prashant-cloudbolt
+          workflow: release-version.yml
+
+      - name: Watch reporting release version workflow
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          RUN_ID=${{steps.return_dispatch.outputs.run_id}}
+          gh run watch $RUN_ID --repo prashant-cloudbolt/workflow-target
