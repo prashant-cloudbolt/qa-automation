@@ -8,39 +8,11 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        repository:
-          - workflow-target
-          - workflow-target1
-
     steps:
-      - name: Get branch
-        id: get_branch
+      - uses: actions/checkout@v4
+        name: Checkout Repository
+
+      - name: Echo Branch name
         run: |
-          # Extract the branch name from the GITHUB_REF environment variable
           branch_name="${GITHUB_REF#refs/heads/}"
-
-          # Set the branch name as an environment variable
-          echo "branch_name=$branch_name" >> $GITHUB_ENV
-
-          # Set the branch name as an output variable
-          echo "::set-output name=branch_name::$branch_name"
-
-      - name: Run ${{ matrix.repository }} release version workflow
-        uses: codex-/return-dispatch@v1
-        id: return_dispatch
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-          ref: ${{ steps.get_branch.outputs.branch_name }}
-          repo: ${{ matrix.repository }}
-          owner: prashant-cloudbolt
-          workflow: release-version.yml
-
-      - name: Watch ${{ matrix.repository }} release version workflow
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          RUN_ID=${{steps.return_dispatch.outputs.run_id}}
-          gh run watch $RUN_ID --repo prashant-cloudbolt/${{ matrix.repository }}
+          echo $branch_name
