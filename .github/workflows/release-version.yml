@@ -19,7 +19,7 @@ jobs:
         id: return_dispatch
         with:
           token: ${{ secrets.GH_TOKEN }}
-          ref: ${{ github.event.workflow_run.head_branch }}
+          ref: $branch_name
           repo: workflow-target
           owner: prashant-cloudbolt
           workflow: release-version.yml
