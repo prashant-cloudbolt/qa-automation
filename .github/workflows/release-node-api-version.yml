@@ -4,7 +4,6 @@ on:
     workflows: ["release-api-version"]
     branches:
       - multi_tenant_stage
-      - multi_tenant_prod
       - multi_tenant_dev
     types:
       - completed
@@ -42,9 +41,3 @@ jobs:
         run: |
           RUN_ID=${{steps.return_dispatch.outputs.run_id}}
           gh run watch $RUN_ID --repo prashant-cloudbolt/workflow-target
-
-      # - name: run node-api release version workflow
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      #   run: |
-      #     gh workflow run release-version.yml --repo prashant-cloudbolt/workflow-target --ref ${{ github.event.workflow_run.head_branch }}
