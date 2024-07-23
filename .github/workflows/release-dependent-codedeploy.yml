@@ -9,6 +9,14 @@ on:
       - completed
 
 jobs:
+  log-trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log Trigger Details
+        run: |
+          echo "Triggered by workflow: ${{ github.event.workflow_run.workflow_name }}"
+          echo "Conclusion: ${{ github.event.workflow_run.conclusion }}"
+
   trigger-codedeploy-mirastage:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.workflow_name == 'api-mirastage-codedeploy' && github.event.workflow_run.conclusion == 'success' }}
