@@ -8,11 +8,38 @@ on:
     types:
       - completed
 
-
 jobs:
-  trigger-codedeploy-workflow:
+  trigger-codedeploy-mirastage:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.workflow_name == 'api-mirastage-codedeploy' && github.event.workflow_run.conclusion == 'success' }}
+    strategy:
+      matrix:
+        repository:
+          - workflow-target
+          - workflow-target1
+
+    steps:
+      - name: Run ${{ matrix.repository }} release version workflow
+        uses: codex-/return-dispatch@v1
+        id: return_dispatch
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          ref: ${{ github.event.workflow_run.head_branch }}
+          repo: ${{ matrix.repository }}
+          owner: prashant-cloudbolt
+          workflow: codedeploy-mirastage.yml
+
+      - name: Watch ${{ matrix.repository }} release version workflow
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          RUN_ID=${{steps.return_dispatch.outputs.run_id}}
+          gh run watch $RUN_ID --repo prashant-cloudbolt/${{ matrix.repository }}
+
+  trigger-codedeploy-dev:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.workflow_name == 'api-dev-codedeploy' && github.event.workflow_run.conclusion == 'success' }}
     strategy:
       matrix:
         repository:
