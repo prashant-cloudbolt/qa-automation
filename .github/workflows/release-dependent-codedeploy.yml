@@ -12,10 +12,10 @@ jobs:
   log-trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: Log Trigger Details
+      - name: Log Event Payload
         run: |
-          echo "Triggered by workflow: ${{ github.event.workflow_run.workflow_name }}"
-          echo "Conclusion: ${{ github.event.workflow_run.conclusion }}"
+          echo "Event: ${{ toJson(github) }}"
+          echo "Branch ref: ${{ github.ref }}"
 
   trigger-codedeploy-mirastage:
     runs-on: ubuntu-latest
