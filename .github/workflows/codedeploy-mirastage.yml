@@ -33,20 +33,20 @@ jobs:
           echo "branch name is : $branch_name"
           echo "ENV name is : ${{ vars.ENV }}"
 
-  release_api_stage:
-    if: github.ref == 'refs/heads/multi_tenant_stage'
-    needs: [codedeploy]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: multi_tenant_stage
+  # release_api_stage:
+  #   if: github.ref == 'refs/heads/multi_tenant_stage'
+  #   needs: [codedeploy]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         ref: multi_tenant_stage
 
-      - name: run codedeploy-stage workflow
-        env:
-          GITHUB_TOKEN:  ${{ secrets.GH_TOKEN }}
-        run: |
-          gh workflow run release-version.yml \
-          --ref=multi_tenant_stage \
-          --repo prashant-cloudbolt/workflow-source
+  #     - name: run codedeploy-stage workflow
+  #       env:
+  #         GITHUB_TOKEN:  ${{ secrets.GH_TOKEN }}
+  #       run: |
+  #         gh workflow run release-version.yml \
+  #         --ref=multi_tenant_stage \
+  #         --repo prashant-cloudbolt/workflow-source
