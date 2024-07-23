@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Log Event Payload
         run: |
-          echo "Event: ${{ toJson(github.event.workflow_run) }}"
+          echo "Event: ${{ toJson(github.event.workflow_run.name) }}"
           echo "Branch ref: ${{ github.ref }}"
 
   trigger-codedeploy-mirastage:
