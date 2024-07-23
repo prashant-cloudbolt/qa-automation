@@ -9,17 +9,9 @@ on:
       - completed
 
 jobs:
-  log-trigger:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Log Event Payload
-        run: |
-          echo "Event: ${{ toJson(github.event.workflow_run.name) }}"
-          echo "Branch ref: ${{ github.ref }}"
-
   trigger-codedeploy-mirastage:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.workflow_name == 'api-mirastage-codedeploy' && github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.name == 'api-mirastage-codedeploy' && github.event.workflow_run.conclusion == 'success' }}
     strategy:
       matrix:
         repository:
@@ -47,7 +39,7 @@ jobs:
 
   trigger-codedeploy-dev:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.workflow_name == 'api-dev-codedeploy' && github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.name == 'api-dev-codedeploy' && github.event.workflow_run.conclusion == 'success' }}
     strategy:
       matrix:
         repository:
