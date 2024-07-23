@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - multi_tenant_dev
+      - multi_tenant_stage
 
 permissions:
   id-token: write 
