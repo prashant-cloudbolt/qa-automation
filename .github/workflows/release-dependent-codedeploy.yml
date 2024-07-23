@@ -1,4 +1,15 @@
+# name: release-dependent-codedeploy
+# on:
+#   workflow_run:
+#     workflows: ["api-dev-codedeploy"]
+#     branches:
+#       - multi_tenant_dev
+#     types:
+#       - completed
+
+
 name: release-dependent-codedeploy
+
 on:
   workflow_run:
     workflows: ["api-dev-codedeploy"]
@@ -6,8 +17,10 @@ on:
       - multi_tenant_dev
     types:
       - completed
+
+
 jobs:
-  trigger-release-workflow:
+  trigger-codedeploy-workflow:
     runs-on: ubuntu-latest
     strategy:
       matrix:
