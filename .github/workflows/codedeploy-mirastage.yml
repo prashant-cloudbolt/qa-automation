@@ -1,4 +1,4 @@
-name: node-api-mirastage-codedeploy
+name: api-mirastage-codedeploy
 
 on:
   workflow_dispatch:
