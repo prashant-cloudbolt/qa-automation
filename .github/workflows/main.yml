@@ -1,10 +1,8 @@
-name: Build and Deploy
-
 ###
 ### SLACK_WEBHOOK_URL: ${{ secrets.SLACK_DEPLOYMENT_NOTIFICATION_WEBHOOK }}
 ###
 
-
+name: Build and Deploy
 on:
   push:
     branches:
@@ -20,41 +18,40 @@ jobs:
 
       - name: Run tests
         run: |
-          echo "Running tests..."
-          # Simulate a test failure
-          exit 1
+          # Your test commands here
+          exit 1  # Simulate a failure for demonstration purposes
 
-    - name: Notify Slack on failure
-      if: failure()
-      run: |
-        curl -X POST -H 'Content-type: application/json' --data '{
-          "attachments": [
-            {
-              "color": "danger",
-              "title": "GitHub Actions Job Failed",
-              "text": "A job in the GitHub Actions workflow has failed.",
-              "fields": [
-                {
-                  "title": "Workflow",
-                  "value": "${{ github.workflow }}",
-                  "short": true
-                },
-                {
-                  "title": "Job",
-                  "value": "${{ github.job }}",
-                  "short": true
-                },
-                {
-                  "title": "Commit",
-                  "value": "${{ github.sha }}",
-                  "short": true
-                },
-                {
-                  "title": "URL",
-                  "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                  "short": false
-                }
-              ]
-            }
-          ]
-        }' ${{ secrets.SLACK_DEPLOYMENT_NOTIFICATION_WEBHOOK }}
+      - name: Notify Slack on failure
+        if: failure()
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{
+            "attachments": [
+              {
+                "color": "danger",
+                "title": "GitHub Actions Job Failed",
+                "text": "A job in the GitHub Actions workflow has failed.",
+                "fields": [
+                  {
+                    "title": "Workflow",
+                    "value": "${{ github.workflow }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Job",
+                    "value": "${{ github.job }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Commit",
+                    "value": "${{ github.sha }}",
+                    "short": true
+                  },
+                  {
+                    "title": "URL",
+                    "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "short": false
+                  }
+                ]
+              }
+            ]
+          }' ${{ secrets.SLACK_DEPLOYMENT_NOTIFICATION_WEBHOOK }}
