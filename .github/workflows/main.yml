@@ -44,7 +44,7 @@ jobs:
                   {
                     "title": "Commit",
                     "value": "${{ github.sha }}",
-                    "short": true
+                    # "short": true
                   },
                   {
                     "title": "URL",
