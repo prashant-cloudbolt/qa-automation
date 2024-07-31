@@ -51,6 +51,11 @@ jobs:
                       "title": "Commit Message",
                       "value": "${{ github.event.head_commit.message }}",
                       "short": false
+                    },
+                    {
+                      "title": "Action Workflow",
+                      "value": "<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow Run>",
+                      "short": false
                     }
                   ]
                 }
