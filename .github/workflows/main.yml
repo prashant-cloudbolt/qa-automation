@@ -29,41 +29,41 @@ jobs:
         with:
           status: ${{ job.status }}
           message: |
-            :rotating_light: *Urgent*: GitHub Actions Job Failed :rotating_light:
+            :rotating_light: *Urgent*: GitHub Actions Job Failed: ${{ github.workflow }} :rotating_light:
             Repository: ${{ github.repository }}
             Pipeline URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
 
-      - name: Notify Slack on failure
-        if: failure()
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{
-            "attachments": [
-              {
-                "color": "danger",
-                "title": ":rotating_light: *Urgent*: GitHub Actions Job Failed :rotating_light:",
-                "fields": [
-                  {
-                    "title": "Workflow",
-                    "value": "${{ github.workflow }}",
-                    "short": true
-                  },
-                  {
-                    "title": "Job",
-                    "value": "${{ github.job }}",
-                    # "short": true
-                  },
-                  {
-                    "title": "Commit",
-                    "value": "${{ github.sha }}",
-                    # "short": true
-                  },
-                  {
-                    "title": "URL",
-                    "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                    "short": false
-                  }
-                ]
-              }
-            ]
-          }' ${{ secrets.SLACK_DEPLOYMENT_NOTIFICATION_WEBHOOK }}
+      # - name: Notify Slack on failure
+      #   if: failure()
+      #   run: |
+      #     curl -X POST -H 'Content-type: application/json' --data '{
+      #       "attachments": [
+      #         {
+      #           "color": "danger",
+      #           "title": ":rotating_light: *Urgent*: GitHub Actions Job Failed :rotating_light:",
+      #           "fields": [
+      #             {
+      #               "title": "Workflow",
+      #               "value": "${{ github.workflow }}",
+      #               "short": true
+      #             },
+      #             {
+      #               "title": "Job",
+      #               "value": "${{ github.job }}",
+      #               # "short": true
+      #             },
+      #             {
+      #               "title": "Commit",
+      #               "value": "${{ github.sha }}",
+      #               # "short": true
+      #             },
+      #             {
+      #               "title": "URL",
+      #               "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+      #               "short": false
+      #             }
+      #           ]
+      #         }
+      #       ]
+      #     }' ${{ secrets.SLACK_DEPLOYMENT_NOTIFICATION_WEBHOOK }}
