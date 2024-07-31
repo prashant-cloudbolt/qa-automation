@@ -29,7 +29,6 @@ jobs:
               {
                 "color": "danger",
                 "title": ":rotating_light: *Urgent*: GitHub Actions Job Failed :rotating_light:",
-                "text": "A job in the GitHub Actions workflow has failed.",
                 "fields": [
                   {
                     "title": "Workflow",
