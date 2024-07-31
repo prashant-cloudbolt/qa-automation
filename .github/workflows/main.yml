@@ -21,6 +21,19 @@ jobs:
           # Your test commands here
           exit 1  # Simulate a failure for demonstration purposes
 
+      - name: Notify failure to Slack
+        uses: act10ns/slack@v2.0.0
+        if: ${{ failure() }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_DEPLOYMENT_NOTIFICATION_WEBHOOK }} 
+        with:
+          status: ${{ job.status }}
+          message: |
+            Pipeline Failure details: :rotating_light: *Urgent*: GitHub Actions Job Failed :rotating_light:
+            Repository: ${{ github.repository }}
+            Pipeline URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+
       - name: Notify Slack on failure
         if: failure()
         run: |
