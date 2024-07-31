@@ -30,6 +30,6 @@ jobs:
         with:
           status: ${{ job.status }}
           message: |
-            :rotating_light: *Urgent*: GitHub Actions Job Failed: *${{ github.workflow }}* :rotating_light:
+            :rotating_light: *Urgent*: API Deployment Failed for CSMP-Stage(mira-dogfood) Environment :rotating_light:
             Repository: ${{ github.repository }}
             Pipeline URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
