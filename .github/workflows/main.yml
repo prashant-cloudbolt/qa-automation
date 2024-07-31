@@ -38,7 +38,7 @@ jobs:
                   {
                     "title": "Job",
                     "value": "${{ github.job }}",
-                    "short": true
+                    # "short": true
                   },
                   {
                     "title": "Commit",
