@@ -18,6 +18,7 @@ jobs:
 
       - name: Run tests
         run: |
+          # echo "working fine"
           # Your test commands here
           exit 1  # Simulate a failure for demonstration purposes
 
@@ -29,6 +30,6 @@ jobs:
         with:
           status: ${{ job.status }}
           message: |
-            :rotating_light: *Urgent*: GitHub Actions Job Failed: **${{ github.workflow }}** :rotating_light:
+            :rotating_light: *Urgent*: GitHub Actions Job Failed: *${{ github.workflow }}* :rotating_light:
             Repository: ${{ github.repository }}
             Pipeline URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
