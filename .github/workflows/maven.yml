@@ -22,6 +22,9 @@ jobs:
         with:
           ref: multi_tenant_dev
 
+      - name: exit
+        run: exit 0   
+
       - name: Echo Branch name
         run: |
           branch_name="${GITHUB_REF#refs/heads/}"
