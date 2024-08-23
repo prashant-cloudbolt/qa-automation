@@ -7,12 +7,27 @@ echo $workflow_list
 run_id=$(echo "$workflow_list" | jq -r '.[0].databaseId')
 echo "run_id=$run_id"
 
+# status=""
+# while [ "$status" != "completed" ]; do
+# status=$(gh api "/repos/prashant-cloudbolt/qa-automation/actions/runs/$run_id" --jq '.status')
+# echo "Current status: $status"
+# if [ "$status" == "completed" ]; then
+#     conclusion=$(gh api "/repos/prashant-cloudbolt/qa-automation/actions/runs/$run_id" --jq '.conclusion')
+#     echo "Final conclusion: $conclusion"
+#     if [ "$conclusion" != "success" ]; then
+#     echo "Target workflow failed. Failing source workflow."
+#     exit 1
+#     fi
+# fi
+# sleep 10
+# done
+
 status=""
 while [ "$status" != "completed" ]; do
-status=$(gh api "/repos/prashant-cloudbolt/qa-automation/actions/runs/$run_id" --jq '.status')
+status=$(gh run view $run_id --repo prashant-cloudbolt/qa-automation --json status --jq '.status')
 echo "Current status: $status"
 if [ "$status" == "completed" ]; then
-    conclusion=$(gh api "/repos/prashant-cloudbolt/qa-automation/actions/runs/$run_id" --jq '.conclusion')
+    conclusion=$(gh run view $run_id --repo prashant-cloudbolt/qa-automation --json conclusion --jq '.conclusion')
     echo "Final conclusion: $conclusion"
     if [ "$conclusion" != "success" ]; then
     echo "Target workflow failed. Failing source workflow."
