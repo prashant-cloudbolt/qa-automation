@@ -7,7 +7,7 @@ echo $workflow_list
 run_id=$(echo "$workflow_list" | jq -r '.[0].databaseId')
 echo "run_id=$run_id"
 
-status=$(gh api "/repos/prashant-cloudbolt/qa-automation/actions/runs/$run_id" --jq '.status')
+status=$(gh api "/repos/prashant-cloudbolt/qa-automation/actions/runs/$run_id" --jq '.conclusion')
 echo $status
 
 # status=""
