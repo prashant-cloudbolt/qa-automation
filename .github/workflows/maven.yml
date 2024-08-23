@@ -1,6 +1,11 @@
 name: Java CI with Maven
+
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - multi_tenant_stage
+      - multi_tenant_dev
 
 permissions:
   id-token: write 
