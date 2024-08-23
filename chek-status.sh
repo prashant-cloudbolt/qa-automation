@@ -7,20 +7,17 @@ echo $workflow_list
 run_id=$(echo "$workflow_list" | jq -r '.[0].databaseId')
 echo "run_id=$run_id"
 
-status=$(gh api "/repos/prashant-cloudbolt/qa-automation/actions/runs/$run_id" --jq '.conclusion')
-echo $status
-
-# status=""
-# while [ "$status" != "completed" ]; do
-# status=$(gh api "/repos/prashant-cloudbolt/qa-automation/actions/runs/$run_id" --jq '.status')
-# echo "Current status: $status"
-# if [ "$status" == "completed" ]; then
-#     conclusion=$(gh api "/repos/prashant-cloudbolt/qa-automation/actions/runs/$run_id" --jq '.conclusion')
-#     echo "Final conclusion: $conclusion"
-#     if [ "$conclusion" != "success" ]; then
-#     echo "Target workflow failed. Failing source workflow."
-#     exit 1
-#     fi
-# fi
-# sleep 10
-# done
+status=""
+while [ "$status" != "completed" ]; do
+status=$(gh api "/repos/prashant-cloudbolt/qa-automation/actions/runs/$run_id" --jq '.status')
+echo "Current status: $status"
+if [ "$status" == "completed" ]; then
+    conclusion=$(gh api "/repos/prashant-cloudbolt/qa-automation/actions/runs/$run_id" --jq '.conclusion')
+    echo "Final conclusion: $conclusion"
+    if [ "$conclusion" != "success" ]; then
+    echo "Target workflow failed. Failing source workflow."
+    exit 1
+    fi
+fi
+sleep 10
+done
