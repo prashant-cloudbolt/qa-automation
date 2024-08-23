@@ -27,9 +27,9 @@ jobs:
         with:
           ref: multi_tenant_dev
 
-      - name: exit
-        run: |
-          exit 1
+      # - name: exit
+      #   run: |
+      #     exit 1
 
       - name: Echo Branch name
         run: |
