@@ -1,0 +1,29 @@
+name: Java CI with Maven
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write 
+  contents: read
+  pull-requests: write
+  security-events: write
+  actions: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: DEV
+
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout Repository
+        with:
+          ref: multi_tenant_dev
+
+      - name: Echo Branch name
+        run: |
+          branch_name="${GITHUB_REF#refs/heads/}"
+          echo $branch_name
+          echo "ENV name is : ${{ vars.ENV }}"
