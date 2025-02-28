@@ -15,4 +15,5 @@ jobs:
     - name: Run CSMP V2 API Tests
       run: |
         echo "Running CSMP Stage Smoke Test Cases"
+        sleep 120
         echo "job completed"
